@@ -11,7 +11,7 @@
 ; dot to be lit, and so on.  At the end of the string it loops back to the
 ; beginning and repeats indefinitely until reset.
 ;
-; TRS-80 Model 2 version (64k)
+; TRS-80 Model 2 version (512k)
 ;
 ; Uses the full 64k RAM of the M2.  The M2 can't run from display memory and the
 ; keyboard isn't memory mapped so there aren't any 'gratuitous moves' required
@@ -115,12 +115,13 @@ filldta ld      a,'*'
         ld      a,01h           ;select page 1 and disable display
 ;        ld      a,81h           ;select page 1 and enable display
         out     (0ffh),a
+        ex      af,af'          ;save page
         ld      sp,lb80txt+itern;put stack at end of block
         ld      ix,lb80txt      ;jump to actual code
         jp      (ix)
 
 ; default string to display
-deftxt  defb    " Say hi to LB-80-M2! ",0
+deftxt  defb    " Say hi to LB-80-M2 w/ 512k! ",0
 
 ; 5x8 character data as columns of dots
 chrdta
@@ -291,7 +292,22 @@ nowrap  ld      a,e
         ld      l,e
         defb    0DDh            ;ld ixh,d
         ld      h,d
-        ldir
+
+        bit     7,h             ;check if moving from low page
+        jr      nz,samepag
+        bit     7,d             ;to high page
+        jr      z,samepag
+
+        ex      af,af'
+        inc     a
+        and     0Fh
+        jr      nz,notpag0
+        inc     a
+notpag0 ;or      80h             ;enable display
+        out     (0FFh),a
+        ex      af,af'
+
+samepag ldir
 
         ld      hl,-6           ;compute new stack location
         add     hl,de
@@ -300,6 +316,8 @@ nowrap  ld      a,e
         ld      hl,pxmrg-lb80txt-itern ;jump to pxmrg at new location
         add     hl,de
         jp      (hl)
+
+lp0x    jr      lp0             ;stepping stone for out of reach jr
 
 pxmrg   ld      l,e
         ld      h,d
@@ -323,7 +341,7 @@ pxoff   add     hl,bc           ;skip row if jr'ed to here
         dec     bc              ;do all data bytes
         ld      a,b
         or      c
-        jr      nz,lp0
+        jr      nz,lp0x
         jp      (ix)
 
 coldta
