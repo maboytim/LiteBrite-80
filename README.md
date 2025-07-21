@@ -4,6 +4,16 @@ The LiteBrite-80 (LB-80) is a memory visualization gadget for Z80 systems.  It d
 
 The LB-80 consists of two parts - a Z80 adapter and a display.  The Z80 adapter is a small PCB in which the Z80 is installed and replaces the Z80.  Ideally the Z80 is socketed in the host machine and the LB-80 is just installed in the socket - otherwise the Z80 must be removed and the LB-80 installed in its place or replaced with a socket.  The adapter has a connector to attach a display.  The display is a small PCB that contains an 8x8 or 16x16 LED array that can either plug directly into the adapter or more likely connected to the adapter via a cable so that the display can be located for convenient viewing.
 
+## Theory Of Operation
+
+The operation is very simple.  The 8 address msb's (A8-A15) are latched at the beginning of a memory read or write cycle and are used to light a single LED on a row/column display.  For an 8x8 display the addresses A13-A15 are decoded with a 1-of-8 decoder to select the row, and addresses A10-A12 are decoded with a 1-of-8 decoder to select the column - which in turn light the single LED at the selected row and column position.  The lower-left LED corresponds to the lowest address range and the upper-right LED corresponds to the highest address range.
+
+In normal operation the Z80's address will change very rapidly so the LED's will flash very rapidly - which your eyes will average such that the LED's will appear lit with a brightness proportional to the percentage of time the Z80 accesses memory in the corresponding region over the averaging time of your eyes.
+
+The addresses are latched at the *beginning* of the memory cycle as opposed to the end so that if the cycle is extended by WAIT it will be properly reflected by the corresponding LED.
+
+For a 16x16 display A12-A15 would be decoded for the row and A8-A11 for the column.
+
 ## Adapter PCB
 
 The adapter PCB design is available [here](kicad/Visual80-3).  The design is intended to be as compact as possible so to fit into about the space of the Z80 itself.  To achieve this the design is essentially a 40-pin socket - but with a small protrusion for the display connector.  The adapter could be used in place of a Z80 socket, or if installed in a socket is equivalent to stacking a second socket on top of the socket.
@@ -23,15 +33,17 @@ An 8x8 display PCB design is available [here](kicad/lb-80), and is also in the [
 
 ![](assets/lb-80-disp.jpg)
 
-Here is an earlier version of the display - connected to TRS-80-M3 booted to the FreHD menu:
+Here is an earlier version of the display - connected to TRS-80 M3 booted to the FreHD menu:
 
 ![](assets/lb-80-disp-alt.jpg)
+
+The 8x8 displays can be arranged into larger arrays so a 16x16 display can be made from four 8x8 displays.  I've personally not made a 16x16 display.
 
 ## Software
 
 No special software is needed because the LB-80 just displays the natural behavior of the Z80 activity.  The resultant patterns are interesting and fun to watch but also often lend insight into what the Z80 is doing.
 
-However, it is possible to contrive a program that generates certain patterns on the LB-80 display.  To light an individual dot on an 8x8 display requires that the Z80 be limited to the corresponding 1k block of memory (program, data, and stack).  To light a different individual LED would require the Z80 be limited to a different corresponding 1k block of memory.  To not light an LED would require the Z80 not touch the corresponding 1k block of memory.  So contriving such a program would be tricky.
+However, it is possible to contrive a program that generates certain patterns on the LB-80 display.  To light an individual dot on an 8x8 display requires that the Z80 be limited to the corresponding 1k block of memory (program, data, and stack).  To light a different individual LED would require the Z80 be limited to a different corresponding 1k block of memory.  To not light an LED would require the Z80 not touch the corresponding 1k block of memory.  So contriving such a program is tricky but can be done.
 
 ### Marquee Display Program
 
@@ -39,7 +51,7 @@ A TRS-80 program [lb80text](source/lb80text) that displays scrolling marquee sty
 
 The command syntax is `lb80text "string to display"`.  The quotes are optional and only required if the string has leading spaces.
 
-It happens this demo program is a good stress case for memory.  Although using additional banked memory in the M4 and M2 really has no effect on the operation of the LB-80 itself some banked versions are included.
+It happens that this demo program is a good stress case for memory.  Although using additional banked memory in the M4 and M2 really has no effect on the operation of the LB-80 itself some banked versions are included.  If the program doesn't crash your Z80 and memory system are likely pretty solid.
 
 #### [TRS-80 Model 1 and Model 3 Version](source/lb80text/lb80txm1.asm)
 
@@ -67,3 +79,5 @@ In systems that expose the Z80 bus an LB-80 adapter that connects to the bus rat
 * TRS-80 Model 1
 * TRS-80 Model 2 (12, etc)
 * S100
+
+The TRS-80 M2 (M12, etc) is an interesting case because the address bus is inverted.  It might seem that an LB-80 adapter would have to invert the address signals but that's actually not required.  Inverting both the row and column signals results in the display being rotated 180 degrees so all that's needed is to rotate the display 180 degrees to obtain the intended orientation.
