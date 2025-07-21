@@ -1,7 +1,7 @@
 ; Assemble with Matthew Reed's z80 assembler
 ; http://www.trs-80emulators.com/z80asm/
 ;
-; z80asm.exe lb80txm2.asm
+; z80asm.exe lb80512k.asm
 
 
 ; Program to display text string in scrolling marquee style on LB-80 8x8 display.

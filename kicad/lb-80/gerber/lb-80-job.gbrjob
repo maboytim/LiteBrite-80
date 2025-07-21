@@ -3,19 +3,19 @@
     "GenerationSoftware": {
       "Vendor": "KiCad",
       "Application": "Pcbnew",
-      "Version": "7.0.7"
+      "Version": "9.0.2"
     },
-    "CreationDate": "2025-07-21T04:58:23-04:00"
+    "CreationDate": "2025-07-21T05:45:18-04:00"
   },
   "GeneralSpecs": {
     "ProjectId": {
-      "Name": "Visual80-3",
-      "GUID": "56697375-616c-4383-902d-332e6b696361",
+      "Name": "lb-80",
+      "GUID": "6c622d38-302e-46b6-9963-61645f706362",
       "Revision": "rev?"
     },
     "Size": {
-      "X": 17.957,
-      "Y": 59.105
+      "X": 30.6816,
+      "Y": 21.1312
     },
     "LayerNumber": 2,
     "BoardThickness": 1.6,
@@ -27,44 +27,54 @@
       "PadToPad": 0.2,
       "PadToTrack": 0.2,
       "TrackToTrack": 0.2,
-      "MinLineWidth": 0.3048,
-      "TrackToRegion": 0.3048,
-      "RegionToRegion": 0.3048
+      "MinLineWidth": 0.25,
+      "TrackToRegion": 0.5,
+      "RegionToRegion": 0.5
     }
   ],
   "FilesAttributes": [
     {
-      "Path": "Visual80-3-F_Cu.gbr",
+      "Path": "lb-80-F_Cu.gbr",
       "FileFunction": "Copper,L1,Top",
       "FilePolarity": "Positive"
     },
     {
-      "Path": "Visual80-3-B_Cu.gbr",
+      "Path": "lb-80-B_Cu.gbr",
       "FileFunction": "Copper,L2,Bot",
       "FilePolarity": "Positive"
     },
     {
-      "Path": "Visual80-3-F_Silkscreen.gbr",
+      "Path": "lb-80-F_Paste.gbr",
+      "FileFunction": "SolderPaste,Top",
+      "FilePolarity": "Positive"
+    },
+    {
+      "Path": "lb-80-B_Paste.gbr",
+      "FileFunction": "SolderPaste,Bot",
+      "FilePolarity": "Positive"
+    },
+    {
+      "Path": "lb-80-F_Silkscreen.gbr",
       "FileFunction": "Legend,Top",
       "FilePolarity": "Positive"
     },
     {
-      "Path": "Visual80-3-B_Silkscreen.gbr",
+      "Path": "lb-80-B_Silkscreen.gbr",
       "FileFunction": "Legend,Bot",
       "FilePolarity": "Positive"
     },
     {
-      "Path": "Visual80-3-F_Mask.gbr",
+      "Path": "lb-80-F_Mask.gbr",
       "FileFunction": "SolderMask,Top",
       "FilePolarity": "Negative"
     },
     {
-      "Path": "Visual80-3-B_Mask.gbr",
+      "Path": "lb-80-B_Mask.gbr",
       "FileFunction": "SolderMask,Bot",
       "FilePolarity": "Negative"
     },
     {
-      "Path": "Visual80-3-Edge_Cuts.gbr",
+      "Path": "lb-80-Edge_Cuts.gbr",
       "FileFunction": "Profile",
       "FilePolarity": "Positive"
     }

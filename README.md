@@ -8,21 +8,30 @@ The LB-80 consists of two parts - a Z80 adapter and a display.  The Z80 adapter 
 
 The adapter PCB design is available [here](kicad/Visual80-3).  The design is intended to be as compact as possible so to fit into about the space of the Z80 itself.  To achieve this the design is essentially a 40-pin socket - but with a small protrusion for the display connector.  The adapter could be used in place of a Z80 socket, or if installed in a socket is equivalent to stacking a second socket on top of the socket.
 
+Adapter PCB installed in TRS-80 M3:
+![](assets/lb-80-adapt-m3.jpg)
+
 The design uses individual machine socket pins which can be removed from a machine socket or bare pins can be purchased.  The pins should be inserted in the PCB until the collar touches the top of the PCB - they might have a slight interference fit and need to be pressed into the PCB.
 
 The connector pinout is compatible with the PMOD connector common to FPGA development boards.  The PMOD connector is simply a 2x6 connector with two GND pins, two Vcc pins, and eight signal pins.  For an 8x8 display only six signals are needed so a pinout that allows for a 10-pin connector for 8x8 display is used - this allows for use of a 10-pin cable when connecting the display via a cable.
 
-The use of the PMOD connector allows the display to be used with many FPGA boards for example if emulating a TRS-80 with an FPGA.
+The use of the PMOD connector also allows the display to be used with many FPGA boards for example if emulating a TRS-80 with an FPGA.
 
 ## Display PCB
 
-An 8x8 display PCB design is available in the [TRS-IO project](https://github.com/apuder/TRS-IO/tree/master/kicad/pmod/lb-80).
+An 8x8 display PCB design is available [here](kicad/lb-80), and is also in the [TRS-IO project](https://github.com/apuder/TRS-IO/tree/master/kicad/pmod/lb-80).
+
+![](assets/lb-80-disp.jpg)
+
+Here is an earlier version of the display - connected to TRS-80-M3 booted to the FreHD menu:
+
+![](assets/lb-80-disp-alt.jpg)
 
 ## Software
 
 No special software is needed because the LB-80 just displays the natural behavior of the Z80 activity.  The resultant patterns are interesting and fun to watch but also often lend insight into what the Z80 is doing.
 
-However, it's possible to contrive a program that generates certain patterns on the LB-80 display.  To light an individual dot on an 8x8 display requires that the Z80 be limited to the corresponding 1k block of memory (program, data, and stack).  To light a different individual LED would require the Z80 be limited to a different corresponding 1k block of memory.  To not light an LED would require the Z80 not touch the corresponding 1k block of memory.  So contriving such a program would be tricky.
+However, it is possible to contrive a program that generates certain patterns on the LB-80 display.  To light an individual dot on an 8x8 display requires that the Z80 be limited to the corresponding 1k block of memory (program, data, and stack).  To light a different individual LED would require the Z80 be limited to a different corresponding 1k block of memory.  To not light an LED would require the Z80 not touch the corresponding 1k block of memory.  So contriving such a program would be tricky.
 
 ### Marquee Display Program
 
@@ -50,7 +59,7 @@ Coming...
 
 #### [TRS-80 Model 2 512k Version](source/lb80text/lb80512k.asm)
 
-For TRS-80 M2 with 512k.  A M2 (M12, etc) with 512k is a rare beast but if you are one of the lucky few with a [512k card by Ruud](https://www.youtube.com/watch?v=_I01NHzUzNk) this will give you something to test it with.  (Note: I also have a 512k card of my own design that's not yet ready for primetime).
+For TRS-80 M2 with 512k.  A M2 (M12, etc) with 512k is a rare beast but if you are one of the lucky few with a [512k card by Ruud](https://www.youtube.com/watch?v=_I01NHzUzNk) this will give you something to test it with.  (Note: I also have a 512k card of my own design that's not yet ready for primetime but is my personal motivation for this version).
 
 ## Alternative Adapter Implementations
 
